@@ -1,3 +1,8 @@
 .SidebarComponent{
   background-color: #282e44;
+  border: 1px;
+  border-color : rgb(204, 51, 84);
+  margin: 0%;
+  height: auto;
+  height: 100%;
 }

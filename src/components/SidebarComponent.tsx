@@ -27,7 +27,7 @@ class SidebarComponent extends React.Component<IProps> {
         const style = {
             "display" : "flex",
             "height" : "100%",
-            "margin" : "5px",
+            "mi":"",
             "width" : "15%",
         }
         if (this.props.PsidebarIsActive){
