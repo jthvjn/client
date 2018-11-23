@@ -75,7 +75,7 @@ export interface ICheLoginReceiveAction {
 
 export function checkOSIOLogin(){
     // let existsInURL : boolean
-    if(typeof(Storage) !== undefined) {
+    if(typeof(window) !== undefined) {
     const localStorageCheServers = JSON.parse(localStorage.getItem("Servers") || "{}")
     global.console.log(localStorageCheServers)
     if (localStorageCheServers[osioCheURL] !== "" && localStorageCheServers[osioCheURL]){
