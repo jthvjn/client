@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { type } from 'os';
 
 // import * as Keycloak from 'keycloak-js'
 const osioCheURL = "che.openshift.io"
@@ -74,6 +75,7 @@ export interface ICheLoginReceiveAction {
 
 export function checkOSIOLogin(){
     // let existsInURL : boolean
+    if(typeof(Storage) !== undefined) {
     const localStorageCheServers = JSON.parse(localStorage.getItem("Servers") || "{}")
     global.console.log(localStorageCheServers)
     if (localStorageCheServers[osioCheURL] !== "" && localStorageCheServers[osioCheURL]){
@@ -122,7 +124,11 @@ export function checkOSIOLogin(){
         }
         // existsInURL = false
     }
-    
+}
+else
+{
+    global.console.log("Storage Not Defined");
+}
     return {
         payload : {
             OSIOAuthenticated : false,
@@ -134,12 +140,17 @@ export function checkOSIOLogin(){
 }
 
 export function checkCheLogin(){
-    const localStorageCheServers : {} = JSON.parse(localStorage.getItem("Servers") || "{}")
     let auths : number = 0
+
+    if(typeof(Storage) !== undefined){
+    const localStorageCheServers : {} = JSON.parse(localStorage.getItem("Servers") || "{}")
     for (const key in localStorageCheServers){
         if (key !== osioCheURL && Object.keys(localStorageCheServers).length > 1 && JSON.stringify(localStorageCheServers[key]) !== "{}"){
             auths++
         }
+    }
+    } else {
+        global.console.log("Storage Not Defined");
     }
     if (auths > 0){
         return {
@@ -189,6 +200,7 @@ export function requestCheLogin(cheServerURL : string, cheUserName : string, che
 }
 
 function setLocalStorageForCheServer(cheServerURL:string, cheServerAuth: string){
+    if(typeof(Storage) !== undefined){
     const localStorageServers : {} = JSON.parse(localStorage.getItem("Servers") || "{}")
     if (!localStorage.getItem("Servers") || localStorageServers === {}){
         localStorage.setItem("Servers","{}")
@@ -196,6 +208,11 @@ function setLocalStorageForCheServer(cheServerURL:string, cheServerAuth: string)
         localStorageServers[cheServerURL] = cheServerAuth
         localStorage.setItem("Servers",JSON.stringify(localStorageServers))
     }
+    } else {
+        global.console.log("Storage Not Defined");
+
+    }
+        
 }
 
     function checkHTTPStatus(status : number) : boolean {
