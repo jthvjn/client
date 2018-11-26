@@ -17,8 +17,8 @@ class Appcomponent extends React.Component<IProps> {
         super(props)
     }
 
-    public componentWillMount(){
-        if(typeof(window) !== undefined){
+    public componentDidMount(){
+        if(typeof(Storage) !== undefined){
         this.props.PcheckOSIOLogin()
         this.props.PcheckCheLogin()
         }
